@@ -1,0 +1,70 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users collection
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null && isPublicProfile(userId);
+    }
+    
+    // Jobs collection
+    match /jobs/{jobId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && 
+        request.auth.token.userType == 'employer' &&
+        request.auth.uid == resource.data.employerId;
+      allow update, delete: if request.auth != null && 
+        request.auth.uid == resource.data.employerId;
+    }
+    
+    // Matches collection
+    match /matches/{matchId} {
+      allow read, write: if request.auth != null && 
+        (request.auth.uid == resource.data.jobSeekerId || 
+         request.auth.uid == resource.data.employerId);
+    }
+    
+    // Swipes collection
+    match /swipes/{swipeId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid == resource.data.userId;
+    }
+    
+    // Meetings collection
+    match /meetings/{meetingId} {
+      allow read, write: if request.auth != null && 
+        (request.auth.uid == resource.data.jobSeekerId || 
+         request.auth.uid == resource.data.employerId);
+    }
+    
+    // Messages collection
+    match /conversations/{conversationId}/messages/{messageId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid in resource.data.participants;
+    }
+    
+    // Files collection
+    match /files/{fileId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid == resource.data.userId;
+    }
+    
+    // Helper functions
+    function isPublicProfile(userId) {
+      return get(/databases/$(database)/documents/users/$(userId)).data.privacy.profileVisibility == 'public';
+    }
+    
+    function isAdmin() {
+      return request.auth.token.admin == true;
+    }
+    
+    function isEmployer() {
+      return request.auth.token.userType == 'employer';
+    }
+    
+    function isJobSeeker() {
+      return request.auth.token.userType == 'job_seeker';
+    }
+  }
+}

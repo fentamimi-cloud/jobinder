@@ -1,0 +1,73 @@
+{
+  "name": "jobinder",
+  "version": "1.0.0",
+  "description": "Job matching platform with AI-powered recommendations",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "concurrently \"npm run dev:user-service\" \"npm run dev:job-service\" \"npm run dev:matching-service\" \"npm run dev:notification-service\"",
+    "dev:frontend": "cd frontend/web && npm start",
+    "dev:user-service": "cd backend/services/user-service && npm run dev",
+    "dev:job-service": "cd backend/services/job-service && npm run dev",
+    "dev:matching-service": "cd backend/services/matching-service && python -m uvicorn main:app --reload --port 8000",
+    "dev:notification-service": "cd backend/services/notification-service && npm run dev",
+    "setup": "./scripts/setup-dev.sh",
+    "setup:services": "./scripts/setup-services.sh",
+    "docker:up": "docker-compose -f docker-compose.dev.yml up -d",
+    "docker:down": "docker-compose -f docker-compose.dev.yml down",
+    "docker:logs": "docker-compose -f docker-compose.dev.yml logs -f",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "npm run test:user-service && npm run test:job-service",
+    "test:user-service": "cd backend/services/user-service && npm test",
+    "test:job-service": "cd backend/services/job-service && npm test",
+    "test:frontend": "cd frontend/web && npm test -- --watchAll=false",
+    "test:e2e": "cd tests/e2e && npm test",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "npm run build:user-service && npm run build:job-service",
+    "build:user-service": "cd backend/services/user-service && npm run build",
+    "build:job-service": "cd backend/services/job-service && npm run build",
+    "build:frontend": "cd frontend/web && npm run build",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "eslint backend/services/*/src/**/*.ts backend/shared/**/*.ts",
+    "lint:frontend": "cd frontend/web && npm run lint",
+    "lint:fix": "npm run lint:backend -- --fix && npm run lint:frontend -- --fix",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "db:migrate": "cd backend/shared/database && npm run migrate",
+    "db:seed": "cd backend/shared/database && npm run seed",
+    "db:reset": "cd backend/shared/database && npm run reset",
+    "deploy:staging": "./scripts/deploy-staging.sh",
+    "deploy:prod": "./scripts/deploy-prod.sh"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "prettier": "^3.2.5",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "keywords": [
+    "job-matching",
+    "tinder-for-jobs",
+    "ai-recruitment",
+    "career-platform"
+  ],
+  "author": "Jobinder Team",
+  "license": "MIT"
+}
