@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
-import { logger } from '@shared/utils/logger';
+import { logger } from '../../../../shared/utils/logger';
 
 export function validateRequest(schema: Joi.ObjectSchema) {
   return (req: Request, res: Response, next: NextFunction): void => {

@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 // Load environment variables
 dotenv.config();
 
-import { logger } from '@shared/utils/logger';
+import { logger } from '../../../shared/utils/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { requestLogger } from './middleware/requestLogger';
 import { userRoutes } from './routes/users';
