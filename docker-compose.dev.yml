@@ -71,16 +71,17 @@ services:
   firebase-emulator:
     image: andreysenov/firebase-tools:latest
     container_name: jobinder-firebase
-    command: firebase emulators:start --only firestore,auth,storage --project demo-project --host 0.0.0.0
+    command: firebase emulators:start --only firestore,auth,storage --project demo-project
     ports:
       - "9099:9099"   # Auth emulator
-      - "8080:8080"   # Firestore emulator
+      - "8082:8082"   # Firestore emulator
       - "9199:9199"   # Storage emulator
       - "4000:4000"   # Emulator UI
     volumes:
       - ./firebase.json:/home/node/firebase.json:ro
       - ./firestore.rules:/home/node/firestore.rules:ro
       - ./firestore.indexes.json:/home/node/firestore.indexes.json:ro
+      - ./storage.rules:/home/node/storage.rules:ro
       - firebase_data:/home/node/.cache
     environment:
       - FIREBASE_TOKEN=${FIREBASE_TOKEN:-}
@@ -94,13 +95,14 @@ services:
     environment:
       - SERVICES=s3,sqs,sns
       - DEFAULT_REGION=us-east-1
-      - DATA_DIR=/tmp/localstack/data
+      - DATA_DIR=/var/lib/localstack
+      - TMPDIR=/var/lib/localstack/tmp
       - DOCKER_HOST=unix:///var/run/docker.sock
     ports:
       - "4566:4566"
       - "4571:4571"
     volumes:
-      - localstack_data:/tmp/localstack
+      - localstack_data:/var/lib/localstack
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - jobinder-network
@@ -141,7 +143,7 @@ services:
     image: adminer:latest
     container_name: jobinder-adminer
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
       ADMINER_DEFAULT_SERVER: postgres
     networks:
