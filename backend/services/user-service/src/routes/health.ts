@@ -1,5 +1,5 @@
 import express from 'express';
-import { firestore } from '@shared/config/firebase';
+import { firestore } from '../../../../shared/config/firebase';
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { auth } from '@shared/config/firebase';
-import { logger } from '@shared/utils/logger';
-import { AuthenticatedRequest } from '@shared/types/api';
+import { auth } from '../../../../shared/config/firebase';
+import { logger } from '../../../../shared/utils/logger';
+import { AuthenticatedRequest } from '../../../../shared/types/api';
 
 export async function authenticateToken(
   req: Request & AuthenticatedRequest,

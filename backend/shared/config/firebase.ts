@@ -10,7 +10,7 @@ if (!admin.apps.length) {
 
   if (process.env.NODE_ENV === 'development' && !serviceAccountPath) {
     // Use emulator in development
-    process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080';
+    process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8082';
     process.env.FIREBASE_AUTH_EMULATOR_HOST = 'localhost:9099';
     process.env.FIREBASE_STORAGE_EMULATOR_HOST = 'localhost:9199';
     

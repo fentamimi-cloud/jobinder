@@ -9,7 +9,7 @@ npm run dev:frontend
 
 
 Explore the Services
-Database Management: Visit http://localhost:8080 (Adminer)
+Database Management: Visit http://localhost:8081 (Adminer)
 Server: postgres, User: jobinder, Password: password, DB: jobinder_dev
 Email Testing: Visit http://localhost:8025 (MailHog)
 File Storage: Visit http://localhost:9001 (MinIO Console)
@@ -24,3 +24,11 @@ cd backend/services/matching-service && npm run dev
 
 # Start Frontend Application
 cd frontend/web && npm start 
+
+💡 What You Can Build Now
+✅ User authentication - Firebase integration ready
+✅ Job posting system - Database schemas created
+✅ AI matching engine - ML pipeline architecture ready
+✅ Real-time swiping - WebSocket infrastructure prepared
+✅ Meeting scheduling - Calendar integration setup
+✅ File uploads - S3-compatible storage running

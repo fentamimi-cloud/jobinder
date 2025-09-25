@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { logger } from '@shared/utils/logger';
-import { ApiResponse } from '@shared/types/api';
+import { logger } from '../../../../shared/utils/logger';
+import { ApiResponse } from '../../../../shared/types/api';
 
 export function errorHandler(
   error: any,
