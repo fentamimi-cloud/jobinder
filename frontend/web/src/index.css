@@ -1,13 +1,25 @@
-/* Import Inter font for modern typography */
+/* Import fonts for modern typography */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap');
 
 body {
   margin: 0;
-  font-family: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Inter', 'Heebo', 'Rubik', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  font-family: 'Heebo', 'Rubik', 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+html[dir="rtl"] body {
+  text-align: right;
+  direction: rtl;
 }
 
 code {
