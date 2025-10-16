@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Container, Paper } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import CountUp from 'react-countup';
 import { useTranslation } from 'react-i18next';
 
@@ -44,12 +44,12 @@ const LiveStats: React.FC = () => {
     <Box
       sx={{
         background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
-        py: 4,
+        py: { xs: 3, md: 4 },
         borderTop: '1px solid rgba(102, 126, 234, 0.1)',
         borderBottom: '1px solid rgba(102, 126, 234, 0.1)'
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
         <Typography
           variant="h6"
           align="center"
@@ -75,7 +75,7 @@ const LiveStats: React.FC = () => {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   textAlign: 'center',
                   background: 'white',
                   borderRadius: 3,

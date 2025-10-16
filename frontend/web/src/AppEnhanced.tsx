@@ -12,7 +12,7 @@ import {
   IconButton,
   useMediaQuery
 } from '@mui/material';
-import { Menu, Language } from '@mui/icons-material';
+import { Language } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
@@ -244,7 +244,7 @@ function AppEnhanced() {
             />
           </Box>
 
-          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1, px: { xs: 2, sm: 3, md: 4 } }}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -346,12 +346,12 @@ function AppEnhanced() {
         <LiveStats />
 
         {/* Benefits Section - Simple version */}
-        <Box sx={{ py: 8, background: 'white' }}>
-          <Container maxWidth="lg">
-            <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 700, mb: 2 }}>
+        <Box sx={{ py: { xs: 4, md: 8 }, background: 'white' }}>
+          <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
+            <Typography variant="h3" align="center" gutterBottom sx={{ fontWeight: 700, mb: 2, fontSize: { xs: '1.75rem', sm: '2rem', md: '2.5rem' } }}>
               {t('benefits.title')}
             </Typography>
-            <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 6 }}>
+            <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: { xs: 4, md: 6 }, fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' } }}>
               {t('benefits.subtitle')}
             </Typography>
             
@@ -370,18 +370,18 @@ function AppEnhanced() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <Box
-                    sx={{
-                      p: 3,
-                      textAlign: 'center',
-                      borderRadius: 3,
-                      background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
-                      border: '1px solid rgba(102, 126, 234, 0.1)',
-                      transition: 'all 0.3s',
-                      '&:hover': {
-                        transform: 'translateY(-8px)',
-                        boxShadow: '0 12px 32px rgba(102, 126, 234, 0.15)'
-                      }
-                    }}
+                  sx={{
+                    p: { xs: 2, sm: 3 },
+                    textAlign: 'center',
+                    borderRadius: 3,
+                    background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
+                    border: '1px solid rgba(102, 126, 234, 0.1)',
+                    transition: 'all 0.3s',
+                    '&:hover': {
+                      transform: 'translateY(-8px)',
+                      boxShadow: '0 12px 32px rgba(102, 126, 234, 0.15)'
+                    }
+                  }}
                   >
                     <Typography variant="h2" sx={{ mb: 2 }}>{benefit.icon}</Typography>
                     <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
@@ -415,12 +415,12 @@ function AppEnhanced() {
         {/* Final CTA */}
         <Box
           sx={{
-            py: 8,
+            py: { xs: 4, md: 8 },
             background: 'linear-gradient(135deg, #f8fafc 0%, #e9ecef 100%)',
             textAlign: 'center'
           }}
         >
-          <Container maxWidth="md">
+          <Container maxWidth="md" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
             <Typography variant="h3" gutterBottom sx={{ fontWeight: 700 }}>
               {t('cta.title')}
             </Typography>
@@ -475,13 +475,13 @@ function AppEnhanced() {
         {/* Footer */}
         <Box
           sx={{
-            py: 4,
+            py: { xs: 3, md: 4 },
             background: '#1a1a1a',
             color: 'white',
             textAlign: 'center'
           }}
         >
-          <Container maxWidth="lg">
+          <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
               {t('footer.tagline')}
             </Typography>

@@ -14,8 +14,8 @@ const FinalStats: React.FC = () => {
   ];
 
   return (
-    <Box sx={{ py: 8, background: 'white' }}>
-      <Container maxWidth="lg">
+    <Box sx={{ py: { xs: 4, md: 8 }, background: 'white' }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
         <Typography
           variant="h3"
           align="center"
@@ -37,7 +37,7 @@ const FinalStats: React.FC = () => {
                 <Box
                   sx={{
                     textAlign: 'center',
-                    p: 4,
+                    p: { xs: 2.5, sm: 3, md: 4 },
                     borderRadius: 4,
                     background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
                     border: '2px solid',

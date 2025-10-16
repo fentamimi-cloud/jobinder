@@ -44,8 +44,8 @@ const HowItWorks: React.FC = () => {
   ];
 
   return (
-    <Box sx={{ py: 8, background: 'white' }}>
-      <Container maxWidth="lg">
+    <Box sx={{ py: { xs: 4, md: 8 }, background: 'white' }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
         <Typography
           variant="h3"
           align="center"
@@ -75,7 +75,7 @@ const HowItWorks: React.FC = () => {
                 <Paper
                   elevation={0}
                   sx={{
-                    p: 3,
+                    p: { xs: 2, sm: 3 },
                     height: '100%',
                     textAlign: 'center',
                     position: 'relative',

@@ -34,11 +34,11 @@ const Testimonials: React.FC = () => {
   return (
     <Box
       sx={{
-        py: 8,
+        py: { xs: 4, md: 8 },
         background: 'linear-gradient(135deg, #f8fafc 0%, #e9ecef 100%)'
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
         <Typography
           variant="h3"
           align="center"
@@ -67,7 +67,7 @@ const Testimonials: React.FC = () => {
               >
                 <Paper
                   sx={{
-                    p: 4,
+                    p: { xs: 2.5, sm: 3, md: 4 },
                     height: '100%',
                     borderRadius: 4,
                     position: 'relative',

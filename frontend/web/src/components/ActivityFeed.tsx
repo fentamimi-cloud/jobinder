@@ -19,7 +19,6 @@ const activities: Activity[] = [
 ];
 
 const ActivityFeed: React.FC = () => {
-  const { t } = useTranslation();
   const [currentActivities, setCurrentActivities] = useState<Activity[]>([activities[0], activities[1]]);
   const [activityIndex, setActivityIndex] = useState(2);
 

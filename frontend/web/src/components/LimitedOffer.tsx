@@ -72,7 +72,7 @@ const LimitedOffer: React.FC = () => {
   return (
     <Box
       sx={{
-        py: 8,
+        py: { xs: 4, md: 8 },
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         color: 'white',
         position: 'relative',
@@ -92,7 +92,7 @@ const LimitedOffer: React.FC = () => {
         }}
       />
 
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1, px: { xs: 2, sm: 3, md: 4 } }}>
         <Box sx={{ textAlign: 'center', mb: 6 }}>
           <motion.div
             animate={{
@@ -135,7 +135,7 @@ const LimitedOffer: React.FC = () => {
               >
                 <Paper
                   sx={{
-                    p: 3,
+                    p: { xs: 2, sm: 3 },
                     textAlign: 'center',
                     background: 'rgba(255,255,255,0.95)',
                     backdropFilter: 'blur(10px)',

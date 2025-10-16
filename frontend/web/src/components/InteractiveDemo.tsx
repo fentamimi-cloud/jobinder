@@ -38,8 +38,8 @@ const InteractiveDemo: React.FC = () => {
   };
 
   return (
-    <Box sx={{ py: 8, background: '#f8fafc' }}>
-      <Container maxWidth="lg">
+    <Box sx={{ py: { xs: 4, md: 8 }, background: '#f8fafc' }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
         <Typography
           variant="h3"
           align="center"
@@ -106,7 +106,7 @@ const InteractiveDemo: React.FC = () => {
                     sx={{
                       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                       color: 'white',
-                      p: 3
+                      p: { xs: 2, sm: 3 }
                     }}
                   >
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -131,7 +131,7 @@ const InteractiveDemo: React.FC = () => {
                     </Box>
                   </Box>
 
-                  <CardContent sx={{ p: 3 }}>
+                  <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
                     <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
                       מפתח Full Stack Senior
                     </Typography>
@@ -246,7 +246,7 @@ const InteractiveDemo: React.FC = () => {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    p: 4,
+                    p: { xs: 3, sm: 4 },
                     textAlign: 'center',
                     position: 'relative',
                     overflow: 'hidden'

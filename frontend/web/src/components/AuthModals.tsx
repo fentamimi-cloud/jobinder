@@ -49,8 +49,23 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: 4,
-          overflow: 'visible'
+          borderRadius: { xs: 2, sm: 4 },
+          m: { xs: 1, sm: 2 },
+          maxHeight: 'calc(100vh - 32px)',
+          maxWidth: { xs: 'calc(100vw - 16px)', sm: 600 },
+          position: 'relative',
+          left: 0,
+          right: 0
+        }
+      }}
+      sx={{
+        '& .MuiDialog-container': {
+          alignItems: 'center',
+          justifyContent: 'center'
+        },
+        '& .MuiBackdrop-root': {
+          left: 0,
+          right: 0
         }
       }}
     >
@@ -58,7 +73,7 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
         onClick={onClose}
         sx={{
           position: 'absolute',
-          right: 8,
+          insetInlineEnd: 8,
           top: 8,
           zIndex: 1
         }}
@@ -66,7 +81,7 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
         <Close />
       </IconButton>
 
-      <DialogContent sx={{ p: 0 }}>
+      <DialogContent sx={{ p: 0, overflow: 'auto' }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={mode}
@@ -75,7 +90,7 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
             exit={{ opacity: 0, x: mode === 'login' ? 20 : -20 }}
             transition={{ duration: 0.3 }}
           >
-            <Box sx={{ p: 4 }}>
+            <Box sx={{ p: { xs: 2, sm: 3, md: 3.5 } }}>
               <Typography
                 variant="h4"
                 gutterBottom
@@ -83,20 +98,31 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                   fontWeight: 700,
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
+                  WebkitTextFillColor: 'transparent',
+                  fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' }
                 }}
               >
                 {mode === 'login' ? t('auth.login.title') : t('auth.signup.title')}
               </Typography>
               
-              <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+              <Typography 
+                variant="body1" 
+                color="text.secondary" 
+                sx={{ 
+                  mb: { xs: 2.5, sm: 3 },
+                  fontSize: { xs: '0.9rem', sm: '0.95rem' }
+                }}
+              >
                 {mode === 'login' ? t('auth.login.subtitle') : t('auth.signup.subtitle')}
               </Typography>
 
               <form onSubmit={handleSubmit}>
                 {mode === 'signup' && (
                   <>
-                    <Typography variant="body2" sx={{ mb: 1, fontWeight: 600 }}>
+                    <Typography 
+                      variant="body2" 
+                      sx={{ mb: 1, fontWeight: 600 }}
+                    >
                       {t('auth.signup.userType')}
                     </Typography>
                     <ToggleButtonGroup
@@ -104,7 +130,7 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                       exclusive
                       onChange={(_, value) => value && setUserType(value)}
                       fullWidth
-                      sx={{ mb: 3 }}
+                      sx={{ mb: { xs: 2, sm: 2.5 } }}
                     >
                       <ToggleButton
                         value="jobseeker"
@@ -165,7 +191,7 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                   type="password"
                   value={formData.password}
                   onChange={handleChange('password')}
-                  sx={{ mb: 3 }}
+                  sx={{ mb: 2.5 }}
                   required
                 />
 
@@ -189,7 +215,7 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                 </Button>
               </form>
 
-              <Box sx={{ mt: 3, textAlign: 'center' }}>
+              <Box sx={{ mt: 2.5, textAlign: 'center' }}>
                 <Typography variant="body2" color="text.secondary">
                   {mode === 'login' ? t('auth.login.noAccount') : t('auth.signup.haveAccount')}{' '}
                   <Button
@@ -198,7 +224,8 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                     sx={{
                       textTransform: 'none',
                       fontWeight: 600,
-                      color: '#667eea'
+                      color: '#667eea',
+                      p: 0
                     }}
                   >
                     {mode === 'login' ? t('auth.login.signupHere') : t('auth.signup.loginHere')}
