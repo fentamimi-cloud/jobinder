@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobinder - AI-Powered Job Matching Platform</title>
+    
+    <!-- Material-UI CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    
+    <!-- Hebrew Font Support -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Noto+Sans+Hebrew:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', 'Heebo', 'Noto Sans Hebrew', sans-serif;
+            background: linear-gradient(135deg, #00c851 0%, #7b1fa2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00c851, #7b1fa2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00c851, #7b1fa2);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #00c851;
+            border: 2px solid #00c851;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .lang-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .lang-toggle:hover {
+            background: rgba(0, 200, 81, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #e8f5e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: white;
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: #00c851;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: #666;
+        }
+
+        /* Job Card Demo */
+        .demo-section {
+            background: white;
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .demo-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .job-card {
+            max-width: 400px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #00c851, #7b1fa2);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .job-card:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+
+        .job-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-card .company {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .job-card .salary {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reject-btn {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .like-btn {
+            background: #00c851;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Features */
+        .features {
+            background: white;
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            text-align: center;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f0fff4, #e6fffa);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #00c851;
+            margin-bottom: 1rem;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            max-width: 300px;
+            z-index: 1000;
+            border-left: 4px solid #00c851;
+        }
+
+        /* Discount Badge */
+        .discount-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Enhanced gradients */
+        .gradient-text {
+            background: linear-gradient(135deg, #00c851, #7b1fa2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Special offer section */
+        .special-offer {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .special-offer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .activity-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        /* RTL Support */
+        [dir="rtl"] {
+            font-family: 'Heebo', 'Noto Sans Hebrew', 'Roboto', sans-serif;
+        }
+
+        [dir="rtl"] .nav {
+            direction: rtl;
+        }
+
+        [dir="rtl"] .nav-buttons {
+            flex-direction: row-reverse;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .activity-feed {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="container nav">
+            <div class="logo">Jobinder</div>
+            <div class="nav-buttons">
+                <button class="lang-toggle" onclick="toggleLanguage()">🌐</button>
+                <a href="#" class="btn btn-outline" onclick="openAuth('login')">Login</a>
+                <a href="#" class="btn btn-primary" onclick="openAuth('signup')">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 id="hero-title">Find Your Dream Job</h1>
+            <p id="hero-subtitle">AI-powered job matching that connects you with perfect opportunities</p>
+            <a href="#demo" class="btn btn-primary">Try Demo</a>
+        </div>
+    </section>
+
+    <!-- Special Offer Banner -->
+    <section class="special-offer">
+        <div class="container">
+            <h3>🔥 Limited Time: Premium Job Matching FREE for 30 Days! 🔥</h3>
+            <p>Join 10,000+ professionals who found their dream jobs this month</p>
+        </div>
+    </section>
+
+    <!-- Live Stats -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 id="stat-searching">2,847</h3>
+                    <p id="stat-searching-label">Job Seekers</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="stat-matches">156</h3>
+                    <p id="stat-matches-label">Matches Today</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="stat-hires">1,247</h3>
+                    <p id="stat-hires-label">Successful Hires</p>
+                </div>
+                <div class="stat-item">
+                    <h3 id="stat-days">12</h3>
+                    <p id="stat-days-label">Avg. Days to Hire</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo -->
+    <section class="demo-section" id="demo">
+        <div class="container">
+            <h2 id="demo-title">Try Job Swiping</h2>
+            <div class="job-card" id="jobCard" style="position: relative;">
+                <div class="discount-badge">HOT 🔥</div>
+                <h3 id="job-title">Senior Software Engineer</h3>
+                <div class="company" id="job-company">Google</div>
+                <div class="salary" id="job-salary">$120,000 - $180,000</div>
+                <p id="job-description">Join our innovative team building the next generation of web technologies. Remote work available.</p>
+                
+                <div class="card-actions">
+                    <button class="action-btn reject-btn" onclick="swipeJob('reject')">✕</button>
+                    <button class="action-btn like-btn" onclick="swipeJob('like')">❤</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 id="feature1-title" class="gradient-text">AI Matching</h3>
+                    <p id="feature1-desc">Advanced algorithms analyze your skills and preferences</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3 id="feature2-title" class="gradient-text">Quality Jobs</h3>
+                    <p id="feature2-desc">Curated positions from top companies worldwide</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 id="feature3-title" class="gradient-text">Fast Process</h3>
+                    <p id="feature3-desc">Get hired in days, not months</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activity Feed -->
+    <div class="activity-feed" id="activityFeed">
+        <h4>Live Activity</h4>
+        <div class="activity-item">Sarah matched with Microsoft</div>
+        <div class="activity-item">John got hired at Apple</div>
+        <div class="activity-item">New job posted: React Developer</div>
+    </div>
+
+    <script>
+        // Language switching
+        let currentLang = 'en';
+        
+        const translations = {
+            en: {
+                'hero-title': 'Find Your Dream Job',
+                'hero-subtitle': 'AI-powered job matching that connects you with perfect opportunities',
+                'demo-title': 'Try Job Swiping',
+                'job-title': 'Senior Software Engineer',
+                'job-company': 'Google',
+                'job-salary': '$120,000 - $180,000',
+                'job-description': 'Join our innovative team building the next generation of web technologies. Remote work available.',
+                'stat-searching-label': 'Job Seekers',
+                'stat-matches-label': 'Matches Today',
+                'stat-hires-label': 'Successful Hires',
+                'stat-days-label': 'Avg. Days to Hire',
+                'feature1-title': 'AI Matching',
+                'feature1-desc': 'Advanced algorithms analyze your skills and preferences',
+                'feature2-title': 'Quality Jobs',
+                'feature2-desc': 'Curated positions from top companies worldwide',
+                'feature3-title': 'Fast Process',
+                'feature3-desc': 'Get hired in days, not months'
+            },
+            he: {
+                'hero-title': 'מצא את עבודת החלומות שלך',
+                'hero-subtitle': 'התאמת עבודה מבוססת בינה מלאכותית שמחברת אותך להזדמנויות מושלמות',
+                'demo-title': 'נסה החלקת עבודות',
+                'job-title': 'מהנדס תוכנה בכיר',
+                'job-company': 'גוגל',
+                'job-salary': '$120,000 - $180,000',
+                'job-description': 'הצטרף לצוות החדשני שלנו הבונה את הדור הבא של טכנולוגיות האינטרנט. עבודה מרחוק זמינה.',
+                'stat-searching-label': 'מחפשי עבודה',
+                'stat-matches-label': 'התאמות היום',
+                'stat-hires-label': 'גיוסים מוצלחים',
+                'stat-days-label': 'ממוצע ימים לגיוס',
+                'feature1-title': 'התאמה בבינה מלאכותית',
+                'feature1-desc': 'אלגוריתמים מתקדמים מנתחים את כישוריך והעדפותיך',
+                'feature2-title': 'עבודות איכותיות',
+                'feature2-desc': 'משרות נבחרות מחברות מובילות ברחבי העולם',
+                'feature3-title': 'תהליך מהיר',
+                'feature3-desc': 'קבל עבודה תוך ימים, לא חודשים'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'he' : 'en';
+            document.documentElement.dir = currentLang === 'he' ? 'rtl' : 'ltr';
+            
+            const trans = translations[currentLang];
+            for (const [key, value] of Object.entries(trans)) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+        }
+
+        // Job swiping simulation
+        const jobs = [
+            {
+                title: 'Senior Software Engineer',
+                company: 'Google',
+                salary: '$120,000 - $180,000',
+                description: 'Join our innovative team building the next generation of web technologies. Remote work available.'
+            },
+            {
+                title: 'Product Manager',
+                company: 'Apple',
+                salary: '$130,000 - $200,000',
+                description: 'Lead product strategy for our next breakthrough consumer device.'
+            },
+            {
+                title: 'Data Scientist',
+                company: 'Microsoft',
+                salary: '$110,000 - $170,000',
+                description: 'Use machine learning to solve complex business problems.'
+            }
+        ];
+
+        let currentJobIndex = 0;
+
+        function swipeJob(action) {
+            const card = document.getElementById('jobCard');
+            
+            if (action === 'like') {
+                card.style.transform = 'translateX(100%) rotate(20deg)';
+                setTimeout(() => {
+                    alert('🎉 It\'s a match! The company likes you too!');
+                    nextJob();
+                }, 300);
+            } else {
+                card.style.transform = 'translateX(-100%) rotate(-20deg)';
+                setTimeout(nextJob, 300);
+            }
+        }
+
+        function nextJob() {
+            const card = document.getElementById('jobCard');
+            card.style.transform = 'translateX(0) rotate(0)';
+            
+            currentJobIndex = (currentJobIndex + 1) % jobs.length;
+            const job = jobs[currentJobIndex];
+            
+            document.getElementById('job-title').textContent = job.title;
+            document.getElementById('job-company').textContent = job.company;
+            document.getElementById('job-salary').textContent = job.salary;
+            document.getElementById('job-description').textContent = job.description;
+        }
+
+        // Live stats animation
+        function animateStats() {
+            const stats = ['stat-searching', 'stat-matches', 'stat-hires'];
+            stats.forEach(statId => {
+                const element = document.getElementById(statId);
+                const currentValue = parseInt(element.textContent.replace(',', ''));
+                const increment = Math.floor(Math.random() * 5) + 1;
+                element.textContent = (currentValue + increment).toLocaleString();
+            });
+        }
+
+        // Auth modal simulation
+        function openAuth(type) {
+            alert(`${type === 'login' ? 'Login' : 'Sign Up'} functionality would open here in the full application.`);
+        }
+
+        // Activity feed updates
+        function updateActivityFeed() {
+            const activities = [
+                'New match: Sarah ❤️ Microsoft',
+                'John got hired at Apple! 🎉',
+                'New job posted: React Developer',
+                'Maria matched with Google',
+                'Tech startup hiring 5 developers',
+                'Remote job alert: Python Engineer'
+            ];
+            
+            const feedElement = document.getElementById('activityFeed');
+            const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+            
+            const newItem = document.createElement('div');
+            newItem.className = 'activity-item';
+            newItem.textContent = randomActivity;
+            newItem.style.opacity = '0';
+            
+            feedElement.appendChild(newItem);
+            
+            // Animate in
+            setTimeout(() => {
+                newItem.style.opacity = '1';
+                newItem.style.transition = 'opacity 0.3s ease';
+            }, 100);
+            
+            // Remove old items
+            const items = feedElement.querySelectorAll('.activity-item');
+            if (items.length > 4) {
+                items[1].remove(); // Keep the header
+            }
+        }
+
+        // Initialize animations
+        setInterval(animateStats, 3000);
+        setInterval(updateActivityFeed, 5000);
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Jobinder Demo App Loaded Successfully! 🚀');
+        });
+    </script>
+</body>
+</html>
