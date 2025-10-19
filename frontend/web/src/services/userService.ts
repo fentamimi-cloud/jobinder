@@ -69,22 +69,20 @@ class UserService {
    */
   async completeOnboarding(profileData: any) {
     try {
-      // First update the profile with all the onboarding data
-      await this.updateProfile(profileData);
-
-      // Then mark onboarding as complete
       const token = await authService.getCurrentUserToken();
       
       if (!token) {
         throw new Error('Not authenticated');
       }
 
+      // Send profile data with the complete-onboarding request
       const response = await axios.post(
         `${API_BASE_URL}/users/profile/complete-onboarding`,
-        {},
+        profileData,
         {
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
         }
       );
@@ -99,7 +97,7 @@ class UserService {
   /**
    * Upload profile picture
    */
-  async uploadAvatar(imageUrl: string) {
+  async uploadAvatar(file: File) {
     try {
       const token = await authService.getCurrentUserToken();
       
@@ -107,13 +105,16 @@ class UserService {
         throw new Error('Not authenticated');
       }
 
+      const formData = new FormData();
+      formData.append('avatar', file);
+
       const response = await axios.post(
         `${API_BASE_URL}/users/profile/upload-avatar`,
-        { imageUrl },
+        formData,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
           }
         }
       );
@@ -128,7 +129,7 @@ class UserService {
   /**
    * Upload resume
    */
-  async uploadResume(resumeUrl: string) {
+  async uploadResume(file: File) {
     try {
       const token = await authService.getCurrentUserToken();
       
@@ -136,13 +137,16 @@ class UserService {
         throw new Error('Not authenticated');
       }
 
+      const formData = new FormData();
+      formData.append('resume', file);
+
       const response = await axios.post(
         `${API_BASE_URL}/users/profile/upload-resume`,
-        { resumeUrl },
+        formData,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
           }
         }
       );

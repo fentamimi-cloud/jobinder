@@ -9,12 +9,19 @@ import {
 } from '@mui/material';
 import { CloudUpload, CheckCircle } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import userService from '../services/userService';
 
 interface FileUploadProps {
   type: 'avatar' | 'resume';
   currentUrl?: string;
   onUploadComplete: (url: string) => void;
   maxSizeMB?: number;
+}
+
+interface FileUploadResponse {
+  success: boolean;
+  data?: { url: string };
+  message?: string;
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({ 
@@ -27,6 +34,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(currentUrl || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Update preview when currentUrl changes (e.g., after profile reload)
+  React.useEffect(() => {
+    console.log('FileUpload currentUrl changed:', currentUrl);
+    setPreview(currentUrl || null);
+  }, [currentUrl]);
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -67,20 +80,31 @@ const FileUpload: React.FC<FileUploadProps> = ({
         reader.readAsDataURL(file);
       }
 
-      // TODO: Implement actual file upload to storage (MinIO/Firebase Storage)
-      // For now, simulate upload
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Upload file to MinIO via backend
+      let response: FileUploadResponse;
       
-      // Simulate URL (in production, this would be the actual uploaded file URL)
-      const mockUrl = `https://storage.jobinder.com/${type}/${Date.now()}_${file.name}`;
+      if (type === 'avatar') {
+        response = await userService.uploadAvatar(file);
+      } else {
+        response = await userService.uploadResume(file);
+      }
       
-      onUploadComplete(mockUrl);
-      setUploading(false);
+      if (response.success && response.data?.url) {
+        // Update preview with the MinIO URL
+        console.log('Upload successful! MinIO URL:', response.data.url);
+        setPreview(response.data.url);
+        onUploadComplete(response.data.url);
+        setUploading(false);
+      } else {
+        throw new Error(response.message || 'Upload failed');
+      }
 
     } catch (error: any) {
       console.error('Upload error:', error);
-      setError('שגיאה בהעלאת הקובץ. נסה שנית.');
+      const errorMessage = error.response?.data?.message || error.message || 'שגיאה בהעלאת הקובץ. נסה שנית.';
+      setError(errorMessage);
       setUploading(false);
+      setPreview(currentUrl || null); // Revert to original preview
     }
   };
 

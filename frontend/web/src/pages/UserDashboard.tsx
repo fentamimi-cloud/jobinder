@@ -32,11 +32,11 @@ import FileUpload from '../components/FileUpload';
 import OnboardingWizard from '../components/OnboardingWizard';
 
 const UserDashboard: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'he';
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     loadProfile();
@@ -46,6 +46,8 @@ const UserDashboard: React.FC = () => {
     try {
       const response = await userService.getProfile();
       if (response.success) {
+        console.log('Profile loaded:', response.data);
+        console.log('Profile picture URL:', response.data.profilePictureUrl);
         setProfile(response.data);
         
         // Show onboarding if not completed
@@ -91,8 +93,9 @@ const UserDashboard: React.FC = () => {
 
   const handleAvatarUpload = async (url: string) => {
     try {
-      await userService.uploadAvatar(url);
-      loadProfile();
+      // The FileUpload component already uploaded the file and got the URL
+      // We just need to reload the profile to see the updated picture
+      await loadProfile();
     } catch (error) {
       console.error('Avatar upload failed:', error);
     }
@@ -122,9 +125,6 @@ const UserDashboard: React.FC = () => {
       </Box>
     );
   }
-
-  const { i18n: i18nInstance } = useTranslation();
-  const isRTL = i18nInstance.language === 'he';
 
   return (
     <Box sx={{ minHeight: '100vh', background: '#f8fafc', py: 4 }}>
@@ -230,7 +230,7 @@ const UserDashboard: React.FC = () => {
                   fullWidth
                   variant="outlined"
                   startIcon={<Edit />}
-                  onClick={() => setEditMode(!editMode)}
+                  onClick={() => setShowOnboarding(true)}
                   sx={{ mt: 3 }}
                 >
                   ערוך פרופיל
@@ -364,6 +364,11 @@ const UserDashboard: React.FC = () => {
           userType={profile.userType}
           onComplete={handleOnboardingComplete}
           onSkip={() => setShowOnboarding(false)}
+          initialData={
+            profile.userType === 'job_seeker' 
+              ? profile.jobSeekerProfile 
+              : profile.employerProfile
+          }
         />
       )}
     </Box>

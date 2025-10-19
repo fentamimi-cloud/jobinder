@@ -18,6 +18,8 @@ const resources = {
         title: 'מצא עבודה ב-67% פחות זמן',
         subtitle: 'הטינדר למשרות - ממוצע של 12 ימים למציאת עבודה',
         description: 'בינה מלאכותית חכמה שמתאימה בין הכישורים שלך לבין הזדמנויות העבודה המושלמות. פשוט החלק ימינה למשרה שמעניינת אותך!',
+        cta: 'התחל חיפוש עבודה',
+        secondaryCta: 'התחברות',
         tryDemo: 'נסה דמו של 30 שניות - ללא הרשמה',
         findJob: 'בוא נמצא לך עבודה - זה לוקח 2 דקות',
         imEmployer: 'אני מעסיק',
@@ -67,6 +69,22 @@ const resources = {
         pleasant: {
           title: 'חוויה נעימה',
           description: 'ממשק פשוט וידידותי שהופך את חיפוש העבודה לחוויה מהנה'
+        },
+        instant: {
+          title: 'התאמות מיידיות',
+          description: 'קבל התאמה למשרות רלוונטיות תוך שניות'
+        },
+        smart: {
+          title: 'אלגוריתם חכם',
+          description: 'בינה מלאכותית שלומדת את העדפותיך ומשתפרת עם הזמן'
+        },
+        private: {
+          title: 'פרטיות קודם כל',
+          description: 'המידע שלך מאובטח ולא משותף ללא אישורך'
+        },
+        fast: {
+          title: 'תוצאות מהירות',
+          description: 'התחל לקבל ראיונות תוך 24 שעות'
         }
       },
       // Demo Section
@@ -209,6 +227,8 @@ const resources = {
         title: 'Find a Job 67% Faster',
         subtitle: 'Tinder for Jobs - Average 12 days to find work',
         description: 'Smart AI that matches your skills with perfect job opportunities. Simply swipe right on jobs you like!',
+        cta: 'Start Job Search',
+        secondaryCta: 'Login',
         tryDemo: 'Try 30-second demo - no signup',
         findJob: "Let's find you a job - takes 2 minutes",
         imEmployer: "I'm an employer",
@@ -245,9 +265,46 @@ const resources = {
         pleasant: {
           title: 'Pleasant Experience',
           description: 'Simple and friendly interface that makes job search enjoyable'
+        },
+        instant: {
+          title: 'Instant Matches',
+          description: 'Get matched with relevant jobs in seconds'
+        },
+        smart: {
+          title: 'Smart Algorithm',
+          description: 'AI learns your preferences and improves over time'
+        },
+        private: {
+          title: 'Privacy First',
+          description: 'Your data is secure and never shared without permission'
+        },
+        fast: {
+          title: 'Fast Results',
+          description: 'Start getting interviews within 24 hours'
         }
+      },
+      cta: {
+        title: 'Ready to Start?',
+        subtitle: 'Join thousands of job seekers and employers who have already found their perfect match',
+        button: 'Start Job Search'
+      },
+      footer: {
+        about: {
+          title: 'About Jobinder',
+          desc: 'The smart platform for matching job seekers and employers using AI technology'
+        },
+        links: {
+          title: 'Quick Links',
+          about: 'About Us',
+          privacy: 'Privacy Policy',
+          terms: 'Terms of Service'
+        },
+        contact: {
+          title: 'Contact',
+          email: 'support@jobinder.com'
+        },
+        copyright: '© 2025 Jobinder. All rights reserved.'
       }
-      // ... more English translations would go here
     }
   }
 };

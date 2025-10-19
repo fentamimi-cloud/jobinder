@@ -35,10 +35,9 @@ export const updateUserProfileSchema = Joi.object({
     title: Joi.string().optional(),
     bio: Joi.string().optional(),
     skills: Joi.array().items(Joi.string()).optional(),
-    experience: Joi.object({
-      level: Joi.string().valid('entry', 'mid', 'senior', 'executive').optional(),
-      years: Joi.number().min(0).optional()
-    }).optional(),
+    experienceLevel: Joi.string().valid('entry', 'mid', 'senior', 'executive').optional(),
+    experienceYears: Joi.number().min(0).optional(),
+    resumeUrl: Joi.string().uri().allow('', null).optional(),
     education: Joi.array().items(Joi.object({
       degree: Joi.string().required(),
       institution: Joi.string().required(),
@@ -62,8 +61,9 @@ export const updateUserProfileSchema = Joi.object({
     companyName: Joi.string().optional(),
     companySize: Joi.string().optional(),
     industry: Joi.string().optional(),
-    website: Joi.string().uri().optional(),
+    website: Joi.string().uri().allow('', null).optional(),
     description: Joi.string().optional(),
+    logoUrl: Joi.string().uri().allow('', null).optional(),
     recruiterName: Joi.string().optional(),
     recruiterTitle: Joi.string().optional()
   }).optional(),

@@ -28,11 +28,13 @@ interface OnboardingWizardProps {
   userType: 'job_seeker' | 'employer';
   onComplete: (data: any) => void;
   onSkip: () => void;
+  initialData?: any;
 }
 
-const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ open, userType, onComplete, onSkip }) => {
+const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ open, userType, onComplete, onSkip, initialData }) => {
   const { t, i18n } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
+
   const [formData, setFormData] = useState({
     // Job Seeker fields
     title: '',
@@ -54,6 +56,34 @@ const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ open, userType, onC
       country: ''
     }
   });
+
+  // Reset to first step and populate data when dialog opens
+  React.useEffect(() => {
+    if (open) {
+      setActiveStep(0);
+      
+      // Pre-populate with initial data if editing
+      if (initialData) {
+        setFormData({
+          title: initialData.title || '',
+          bio: initialData.bio || '',
+          skills: initialData.skills || [],
+          experienceLevel: initialData.experienceLevel || '',
+          experienceYears: initialData.experienceYears?.toString() || '',
+          companyName: initialData.companyName || '',
+          industry: initialData.industry || '',
+          companySize: initialData.companySize || '',
+          description: initialData.description || '',
+          location: {
+            city: initialData.location?.city || '',
+            state: initialData.location?.state || '',
+            country: initialData.location?.country || ''
+          }
+        });
+      }
+    }
+  }, [open, initialData]);
+
   const [currentSkill, setCurrentSkill] = useState('');
 
   const steps = userType === 'job_seeker' 

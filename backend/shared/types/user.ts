@@ -8,7 +8,7 @@ export interface UserProfile {
   // Personal Information
   firstName: string;
   lastName: string;
-  profilePicture?: string;
+  profilePictureUrl?: string;
   phone?: string;
   location: Location;
   
@@ -36,10 +36,8 @@ export interface JobSeekerProfile {
   bio: string;
   resumeUrl?: string;
   skills: string[];
-  experience: {
-    level: 'entry' | 'mid' | 'senior' | 'executive';
-    years: number;
-  };
+  experienceLevel?: 'entry' | 'mid' | 'senior' | 'executive';
+  experienceYears?: number;
   education: Education[];
   preferences: JobSeekerPreferences;
   portfolio?: Portfolio;
@@ -80,7 +78,7 @@ export interface EmployerProfile {
   industry: string;
   website?: string;
   description: string;
-  logo?: string;
+  logoUrl?: string;
   verificationStatus: 'pending' | 'verified' | 'rejected';
   recruiterName: string;
   recruiterTitle: string;

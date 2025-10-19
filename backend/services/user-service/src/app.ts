@@ -13,7 +13,9 @@ import { logger } from '../../../shared/utils/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { requestLogger } from './middleware/requestLogger';
 import { userRoutes } from './routes/users';
+import { authRoutes } from './routes/auth';
 import { healthRoutes } from './routes/health';
+import { initializeMinIO } from './config/minio';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -47,6 +49,7 @@ app.use(requestLogger);
 app.use('/health', healthRoutes);
 
 // API routes
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
 // 404 handler
@@ -73,9 +76,18 @@ process.on('SIGINT', () => {
 
 // Start server
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  app.listen(PORT, async () => {
     logger.info(`User service running on port ${PORT}`);
     logger.info(`Environment: ${process.env.NODE_ENV}`);
+    
+    // Initialize MinIO storage
+    try {
+      await initializeMinIO();
+      logger.info('MinIO storage initialized');
+    } catch (error) {
+      logger.error('Failed to initialize MinIO:', error);
+      logger.warn('File uploads may not work properly');
+    }
   });
 }
 

@@ -301,6 +301,26 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# TypeScript build artifacts
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
+!*.config.js
+!jest.config.js
+
+# But keep certain JS files
+!frontend/web/public/**/*.js
+
+# Build directories
+dist/
+build/
+out/
+
+# Environment files
+.env.local
+.env.*.local
+
 # Visual Studio 6 build log
 *.plg
 

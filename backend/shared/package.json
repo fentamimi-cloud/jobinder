@@ -1,0 +1,19 @@
+{
+  "name": "@jobinder/shared",
+  "version": "1.0.0",
+  "description": "Shared utilities, types, and configuration for Jobinder backend services",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "install-deps": "npm install"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3"
+  }
+}
+

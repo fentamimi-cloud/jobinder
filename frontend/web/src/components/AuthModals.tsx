@@ -15,6 +15,7 @@ import {
 import { Close } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
 
 interface AuthModalsProps {
@@ -26,6 +27,7 @@ interface AuthModalsProps {
 
 const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMode }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [userType, setUserType] = useState<'jobseeker' | 'employer'>('jobseeker');
   const [formData, setFormData] = useState({
     fullName: '',
@@ -66,7 +68,8 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
           setSuccess(result.message);
           setTimeout(() => {
             onClose();
-            // Optionally redirect to onboarding
+            // Redirect to dashboard for onboarding
+            navigate('/dashboard');
           }, 2000);
         } else {
           setError(result.message);
@@ -81,7 +84,7 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
           setTimeout(() => {
             onClose();
             // Redirect to dashboard
-            window.location.reload();
+            navigate('/dashboard');
           }, 1500);
         } else {
           setError(result.message);

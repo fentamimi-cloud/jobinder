@@ -15,6 +15,7 @@ const logger_1 = require("../../../shared/utils/logger");
 const errorHandler_1 = require("./middleware/errorHandler");
 const requestLogger_1 = require("./middleware/requestLogger");
 const users_1 = require("./routes/users");
+const auth_1 = require("./routes/auth");
 const health_1 = require("./routes/health");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3001;
@@ -36,6 +37,7 @@ app.use(express_1.default.json({ limit: '10mb' }));
 app.use(express_1.default.urlencoded({ extended: true, limit: '10mb' }));
 app.use(requestLogger_1.requestLogger);
 app.use('/health', health_1.healthRoutes);
+app.use('/api/auth', auth_1.authRoutes);
 app.use('/api/users', users_1.userRoutes);
 app.use('*', (req, res) => {
     res.status(404).json({
