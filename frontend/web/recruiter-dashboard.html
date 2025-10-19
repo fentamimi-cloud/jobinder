@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פאנל מגייסת - Jobinder</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: linear-gradient(135deg, #00c851 0%, #7b1fa2 100%);
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00c851, #7b1fa2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00c851, #7b1fa2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title .material-icons {
+            color: #00c851;
+        }
+
+        /* Job Form */
+        .job-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        input, select, textarea {
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Heebo', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #00c851;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00c851, #7b1fa2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 200, 81, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* Job List */
+        .job-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .job-item {
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .job-item:hover {
+            border-color: #00c851;
+            box-shadow: 0 3px 10px rgba(0, 200, 81, 0.2);
+        }
+
+        .job-item.active {
+            border-color: #00c851;
+            background: rgba(0, 200, 81, 0.05);
+        }
+
+        .job-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .job-salary {
+            font-weight: 600;
+            color: #00c851;
+        }
+
+        .job-matches {
+            background: #00c851;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Matches Section */
+        .matches-section {
+            grid-column: 1 / -1;
+        }
+
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .candidate-card {
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            background: white;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .candidate-card:hover {
+            border-color: #00c851;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .match-score {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: linear-gradient(135deg, #00c851, #7b1fa2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .candidate-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .candidate-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .candidate-title {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .candidate-location {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill {
+            background: rgba(0, 200, 81, 0.1);
+            color: #00c851;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .candidate-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 6px;
+        }
+
+        .btn-success {
+            background: #00c851;
+            color: white;
+        }
+
+        .btn-info {
+            background: #2196F3;
+            color: white;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00c851;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* No matches message */
+        .no-matches {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .matches-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">Jobinder - פאנל מגייסת</div>
+            <div class="user-info">
+                <span>שלום, רחל כהן</span>
+                <div class="avatar">ר</div>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalJobs">0</div>
+                <div class="stat-label">משרות פעילות</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCandidates">247</div>
+                <div class="stat-label">מועמדים פוטנציאליים</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalMatches">0</div>
+                <div class="stat-label">התאמות היום</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">87%</div>
+                <div class="stat-label">שביעות רצון</div>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Job Creation Form -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="material-icons">add_circle</span>
+                    הוספת משרה חדשה
+                </h2>
+                
+                <form class="job-form" id="jobForm">
+                    <div class="form-group">
+                        <label for="jobTitle">כותרת המשרה *</label>
+                        <input type="text" id="jobTitle" name="jobTitle" required 
+                               placeholder="לדוגמה: מפתח Full Stack">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company">שם החברה *</label>
+                            <input type="text" id="company" name="company" required 
+                                   placeholder="שם החברה">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">מיקום *</label>
+                            <select id="location" name="location" required>
+                                <option value="">בחר מיקום</option>
+                                <option value="תל אביב">תל אביב</option>
+                                <option value="ירושלים">ירושלים</option>
+                                <option value="חיפה">חיפה</option>
+                                <option value="באר שבע">באר שבע</option>
+                                <option value="עבודה מהבית">עבודה מהבית</option>
+                                <option value="היברידי">היברידי</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="salaryMin">שכר מינימום</label>
+                            <input type="number" id="salaryMin" name="salaryMin" 
+                                   placeholder="15000">
+                        </div>
+                        <div class="form-group">
+                            <label for="salaryMax">שכר מקסימום</label>
+                            <input type="number" id="salaryMax" name="salaryMax" 
+                                   placeholder="25000">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">ניסיון נדרש</label>
+                        <select id="experience" name="experience">
+                            <option value="">בחר רמת ניסיון</option>
+                            <option value="0-1">חסר ניסיון - שנה</option>
+                            <option value="1-3">1-3 שנים</option>
+                            <option value="3-5">3-5 שנים</option>
+                            <option value="5-10">5-10 שנים</option>
+                            <option value="10+">מעל 10 שנים</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="skills">כישורים נדרשים</label>
+                        <input type="text" id="skills" name="skills" 
+                               placeholder="React, Node.js, TypeScript (הפרד בפסיקים)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">תיאור המשרה</label>
+                        <textarea id="description" name="description" 
+                                  placeholder="תאר את המשרה, האחריות והדרישות..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <span id="submitText">פרסם משרה</span>
+                        <span id="submitLoading" class="loading" style="display: none;"></span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Posted Jobs -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="material-icons">work</span>
+                    המשרות שלי
+                </h2>
+                
+                <div class="job-list" id="jobList">
+                    <div class="no-matches">עדיין לא פרסמת משרות. התחילי על ידי הוספת המשרה הראשונה!</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Matches Section -->
+        <section class="section matches-section">
+            <h2 class="section-title">
+                <span class="material-icons">people</span>
+                התאמות למשרה נבחרת
+            </h2>
+            
+            <div id="matchesContainer">
+                <div class="no-matches">בחרי משרה כדי לראות התאמות</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Sample job seekers data
+        const jobSeekers = [
+            {
+                id: 1,
+                name: "דוד לוי",
+                title: "מפתח Full Stack",
+                location: "תל אביב",
+                experience: "5 שנים",
+                skills: ["React", "Node.js", "TypeScript", "MongoDB", "AWS"],
+                avatar: "ד",
+                matchScore: 95
+            },
+            {
+                id: 2,
+                name: "שרה מור",
+                title: "מפתחת Frontend",
+                location: "חיפה",
+                experience: "3 שנים",
+                skills: ["React", "Vue.js", "JavaScript", "CSS", "HTML"],
+                avatar: "ש",
+                matchScore: 88
+            },
+            {
+                id: 3,
+                name: "אמיר כהן",
+                title: "Backend Developer",
+                location: "ירושלים",
+                experience: "4 שנים",
+                skills: ["Node.js", "Python", "PostgreSQL", "Docker", "AWS"],
+                avatar: "א",
+                matchScore: 82
+            },
+            {
+                id: 4,
+                name: "מיכל גרין",
+                title: "DevOps Engineer",
+                location: "תל אביב",
+                experience: "6 שנים",
+                skills: ["AWS", "Docker", "Kubernetes", "Jenkins", "Terraform"],
+                avatar: "מ",
+                matchScore: 78
+            },
+            {
+                id: 5,
+                name: "יוסי ברק",
+                title: "UI/UX Designer",
+                location: "עבודה מהבית",
+                experience: "4 שנים",
+                skills: ["Figma", "Adobe XD", "Sketch", "Prototyping", "User Research"],
+                avatar: "י",
+                matchScore: 71
+            },
+            {
+                id: 6,
+                name: "רונית אבן",
+                title: "QA Engineer",
+                location: "באר שבע",
+                experience: "3 שנים",
+                skills: ["Selenium", "Jest", "Cypress", "Manual Testing", "API Testing"],
+                avatar: "ר",
+                matchScore: 85
+            }
+        ];
+
+        let jobs = [];
+        let selectedJobId = null;
+
+        // DOM elements
+        const jobForm = document.getElementById('jobForm');
+        const jobList = document.getElementById('jobList');
+        const matchesContainer = document.getElementById('matchesContainer');
+        const totalJobsEl = document.getElementById('totalJobs');
+        const totalMatchesEl = document.getElementById('totalMatches');
+        const submitText = document.getElementById('submitText');
+        const submitLoading = document.getElementById('submitLoading');
+
+        // Form submission
+        jobForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading
+            submitText.style.display = 'none';
+            submitLoading.style.display = 'inline-block';
+            
+            setTimeout(() => {
+                const formData = new FormData(jobForm);
+                const jobData = {
+                    id: Date.now(),
+                    title: formData.get('jobTitle'),
+                    company: formData.get('company'),
+                    location: formData.get('location'),
+                    salaryMin: formData.get('salaryMin'),
+                    salaryMax: formData.get('salaryMax'),
+                    experience: formData.get('experience'),
+                    skills: formData.get('skills').split(',').map(s => s.trim()).filter(s => s),
+                    description: formData.get('description'),
+                    matches: calculateMatches(formData.get('skills')),
+                    createdAt: new Date()
+                };
+
+                jobs.push(jobData);
+                renderJobs();
+                updateStats();
+                jobForm.reset();
+                
+                // Hide loading
+                submitText.style.display = 'inline';
+                submitLoading.style.display = 'none';
+                
+                // Show success message
+                alert('המשרה נוספה בהצלחה!');
+            }, 1500);
+        });
+
+        function calculateMatches(skillsString) {
+            if (!skillsString) return [];
+            
+            const jobSkills = skillsString.toLowerCase().split(',').map(s => s.trim());
+            return jobSeekers.filter(seeker => {
+                const hasMatchingSkills = seeker.skills.some(skill => 
+                    jobSkills.some(jobSkill => skill.toLowerCase().includes(jobSkill))
+                );
+                return hasMatchingSkills;
+            }).sort((a, b) => b.matchScore - a.matchScore);
+        }
+
+        function renderJobs() {
+            if (jobs.length === 0) {
+                jobList.innerHTML = '<div class="no-matches">עדיין לא פרסמת משרות. התחילי על ידי הוספת המשרה הראשונה!</div>';
+                return;
+            }
+
+            jobList.innerHTML = jobs.map(job => `
+                <div class="job-item ${selectedJobId === job.id ? 'active' : ''}" 
+                     onclick="selectJob(${job.id})">
+                    <div class="job-title">${job.title}</div>
+                    <div class="job-meta">
+                        <span>${job.company} • ${job.location}</span>
+                        <div>
+                            ${job.salaryMin && job.salaryMax ? 
+                                `<span class="job-salary">₪${job.salaryMin}-${job.salaryMax}</span>` : 
+                                ''
+                            }
+                            <span class="job-matches">${job.matches.length} התאמות</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectJob(jobId) {
+            selectedJobId = jobId;
+            const job = jobs.find(j => j.id === jobId);
+            
+            renderJobs(); // Re-render to show active state
+            renderMatches(job.matches);
+        }
+
+        function renderMatches(matches) {
+            if (matches.length === 0) {
+                matchesContainer.innerHTML = '<div class="no-matches">לא נמצאו התאמות למשרה זו</div>';
+                return;
+            }
+
+            matchesContainer.innerHTML = `
+                <div class="matches-grid">
+                    ${matches.map(candidate => `
+                        <div class="candidate-card">
+                            <div class="match-score">${candidate.matchScore}% התאמה</div>
+                            <div class="candidate-avatar">${candidate.avatar}</div>
+                            <div class="candidate-name">${candidate.name}</div>
+                            <div class="candidate-title">${candidate.title}</div>
+                            <div class="candidate-location">📍 ${candidate.location} • ${candidate.experience}</div>
+                            <div class="skills">
+                                ${candidate.skills.map(skill => 
+                                    `<span class="skill">${skill}</span>`
+                                ).join('')}
+                            </div>
+                            <div class="candidate-actions">
+                                <button class="btn btn-small btn-success" onclick="contactCandidate(${candidate.id})">
+                                    צור קשר
+                                </button>
+                                <button class="btn btn-small btn-info" onclick="viewProfile(${candidate.id})">
+                                    פרופיל מלא
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function contactCandidate(candidateId) {
+            const candidate = jobSeekers.find(c => c.id === candidateId);
+            alert(`יוצר קשר עם ${candidate.name}...`);
+            // כאן ניתן להוסיף לוגיקה לשליחת הודעה או אימייל
+        }
+
+        function viewProfile(candidateId) {
+            const candidate = jobSeekers.find(c => c.id === candidateId);
+            alert(`פותח פרופיל של ${candidate.name}`);
+            // כאן ניתן להוסיף לוגיקה לפתיחת פרופיל מלא
+        }
+
+        function updateStats() {
+            totalJobsEl.textContent = jobs.length;
+            const totalMatches = jobs.reduce((sum, job) => sum + job.matches.length, 0);
+            totalMatchesEl.textContent = totalMatches;
+        }
+
+        // Initialize with sample data
+        console.log('🚀 ממשק המגייסת נטען בהצלחה!');
+        console.log('✅ מוכן לקליטת משרות והתאמות');
+        
+        // Auto-increment candidates counter
+        setInterval(() => {
+            const current = parseInt(document.getElementById('totalCandidates').textContent);
+            if (current < 300) {
+                document.getElementById('totalCandidates').textContent = current + 1;
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
