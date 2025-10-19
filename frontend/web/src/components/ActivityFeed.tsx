@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Avatar, Paper } from '@mui/material';
+import { Box, Typography, Avatar, Paper, IconButton } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { Close } from '@mui/icons-material';
 
 interface Activity {
   id: string;
@@ -30,10 +30,14 @@ const ActivityFeed: React.FC = () => {
         return updated;
       });
       setActivityIndex(prev => prev + 1);
-    }, 4000);
+    }, 180000); // 3 minutes (180000 milliseconds)
 
     return () => clearInterval(interval);
   }, [activityIndex]);
+
+  const handleClose = (activityId: string) => {
+    setCurrentActivities(prev => prev.filter(activity => activity.id !== activityId));
+  };
 
   return (
     <Box
@@ -66,9 +70,30 @@ const ActivityFeed: React.FC = () => {
                 background: 'white',
                 borderRadius: 2,
                 boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                border: '1px solid rgba(102, 126, 234, 0.2)'
+                border: '1px solid rgba(102, 126, 234, 0.2)',
+                position: 'relative',
+                pr: 5
               }}
             >
+              <IconButton
+                onClick={() => handleClose(activity.id)}
+                sx={{
+                  position: 'absolute',
+                  top: 4,
+                  right: 4,
+                  width: 24,
+                  height: 24,
+                  padding: 0,
+                  color: 'text.secondary',
+                  '&:hover': {
+                    color: 'error.main',
+                    background: 'rgba(211, 47, 47, 0.04)'
+                  }
+                }}
+              >
+                <Close sx={{ fontSize: 16 }} />
+              </IconButton>
+              
               <Avatar
                 sx={{
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',

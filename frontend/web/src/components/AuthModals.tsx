@@ -8,11 +8,14 @@ import {
   Button,
   ToggleButton,
   ToggleButtonGroup,
-  IconButton
+  IconButton,
+  Alert,
+  CircularProgress
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import authService from '../services/authService';
 
 interface AuthModalsProps {
   open: boolean;
@@ -29,16 +32,73 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
     email: '',
     password: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', { mode, userType, formData });
-    // Handle authentication logic here
-    onClose();
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      if (mode === 'signup') {
+        // Sign up
+        const [firstName, ...lastNameParts] = formData.fullName.trim().split(' ');
+        const lastName = lastNameParts.join(' ') || firstName;
+
+        const result = await authService.signUp({
+          email: formData.email,
+          password: formData.password,
+          firstName: firstName,
+          lastName: lastName,
+          userType: userType === 'jobseeker' ? 'job_seeker' : 'employer',
+          location: {
+            city: 'Tel Aviv',  // TODO: Get from user input
+            state: 'Tel Aviv',
+            country: 'Israel',
+          },
+          agreeToTerms: true,
+        });
+
+        if (result.success) {
+          setSuccess(result.message);
+          setTimeout(() => {
+            onClose();
+            // Optionally redirect to onboarding
+          }, 2000);
+        } else {
+          setError(result.message);
+        }
+
+      } else {
+        // Login
+        const result = await authService.login(formData.email, formData.password);
+
+        if (result.success) {
+          setSuccess('Login successful! Redirecting...');
+          setTimeout(() => {
+            onClose();
+            // Redirect to dashboard
+            window.location.reload();
+          }, 1500);
+        } else {
+          setError(result.message);
+        }
+      }
+
+    } catch (error: any) {
+      console.error('Auth error:', error);
+      setError(error.message || 'An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, [field]: e.target.value }));
+    setError(null); // Clear error when user types
   };
 
   return (
@@ -116,6 +176,18 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                 {mode === 'login' ? t('auth.login.subtitle') : t('auth.signup.subtitle')}
               </Typography>
 
+              {error && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                  {error}
+                </Alert>
+              )}
+
+              {success && (
+                <Alert severity="success" sx={{ mb: 2 }}>
+                  {success}
+                </Alert>
+              )}
+
               <form onSubmit={handleSubmit}>
                 {mode === 'signup' && (
                   <>
@@ -171,6 +243,8 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                       onChange={handleChange('fullName')}
                       sx={{ mb: 2 }}
                       required
+                      disabled={loading}
+                      placeholder="שם מלא"
                     />
                   </>
                 )}
@@ -183,6 +257,8 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                   onChange={handleChange('email')}
                   sx={{ mb: 2 }}
                   required
+                  disabled={loading}
+                  placeholder="example@email.com"
                 />
 
                 <TextField
@@ -193,6 +269,7 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                   onChange={handleChange('password')}
                   sx={{ mb: 2.5 }}
                   required
+                  disabled={loading}
                 />
 
                 <Button
@@ -200,6 +277,7 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                   fullWidth
                   variant="contained"
                   size="large"
+                  disabled={loading}
                   sx={{
                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                     py: 1.5,
@@ -208,10 +286,17 @@ const AuthModals: React.FC<AuthModalsProps> = ({ open, mode, onClose, onSwitchMo
                     borderRadius: 2,
                     '&:hover': {
                       background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)'
+                    },
+                    '&:disabled': {
+                      background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%)'
                     }
                   }}
                 >
-                  {mode === 'login' ? t('auth.login.submit') : t('auth.signup.submit')}
+                  {loading ? (
+                    <CircularProgress size={24} sx={{ color: 'white' }} />
+                  ) : (
+                    mode === 'login' ? t('auth.login.submit') : t('auth.signup.submit')
+                  )}
                 </Button>
               </form>
 

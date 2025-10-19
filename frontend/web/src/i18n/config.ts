@@ -11,7 +11,7 @@ const resources = {
         howItWorks: 'איך זה עובד',
         login: 'התחברות',
         signup: 'הרשמה',
-        jobMatch: 'JobMatch'
+        jobMatch: 'Jobinder'
       },
       // Hero Section
       hero: {
@@ -50,7 +50,7 @@ const resources = {
       },
       // Benefits Section
       benefits: {
-        title: 'למה JobMatch?',
+        title: 'למה Jobinder?',
         subtitle: 'מערכת חכמה ומתקדמת שחוסכת זמן ומוצאת את ההתאמה המושלמת',
         timeSaving: {
           title: 'חיסכון בזמן',
@@ -139,13 +139,13 @@ const resources = {
           avi: {
             name: 'אבי חן',
             role: 'מהנדס תוכנה',
-            text: 'הצלחתי לשנות קריירה בזכות JobMatch. הפלטפורמה עזרה לי להבין איך להציג את עצמי לתחום חדש.'
+            text: 'הצלחתי לשנות קריירה בזכות Jobinder. הפלטפורמה עזרה לי להבין איך להציג את עצמי לתחום חדש.'
           }
         }
       },
       // Final Stats
       finalStats: {
-        title: 'למה JobMatch עובד טוב יותר?',
+        title: 'למה Jobinder עובד טוב יותר?',
         moreMatches: 'יותר התאמות איכותיות מאתרי גיוס רגילים',
         lessTime: 'פחות זמן עד למציאת עבודה מתאימה',
         satisfaction: 'שביעות רצון ממעסיקים ומחפשי עבודה'
@@ -161,7 +161,7 @@ const resources = {
       footer: {
         tagline: 'טינדר למשרות - המקום לחיבור מושלם',
         description: 'פלטפורמת הגיוס המתקדמת לחיבור מושלם בין מעסיקים למועמדים',
-        copyright: '© 2024 JobMatch. כל הזכויות שמורות.'
+        copyright: '© 2024 Jobinder. כל הזכויות שמורות.'
       },
       // Auth Modals
       auth: {
@@ -203,7 +203,7 @@ const resources = {
         howItWorks: 'How It Works',
         login: 'Login',
         signup: 'Sign Up',
-        jobMatch: 'JobMatch'
+        jobMatch: 'Jobinder'
       },
       hero: {
         title: 'Find a Job 67% Faster',
@@ -228,7 +228,7 @@ const resources = {
         letThemFind: 'Let them find you'
       },
       benefits: {
-        title: 'Why JobMatch?',
+        title: 'Why Jobinder?',
         subtitle: 'Smart and advanced system that saves time and finds the perfect match',
         timeSaving: {
           title: 'Time Saving',
